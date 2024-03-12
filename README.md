@@ -2,7 +2,7 @@
 
 "This is a moddified version of Starryalley Anduril2 mods"
 
-I've added some new features on top of [Anduril from Toykeeper](https://github.com/ToyKeeper/anduril). I started modding the firmware from [this old repo](https://github.com/starryalley/anduril2), and then moved here. New changes/features will be updated only here.
+Starryalley added some new features on top of [Anduril from Toykeeper](https://github.com/ToyKeeper/anduril). I started modding the firmware from [this old repo](https://github.com/starryalley/anduril2), and then moved here. New changes/features will be updated only here.
 
 See the list of features/changes here in [docs/starryalley-mod.md](docs/starryalley-mod.md).
 
