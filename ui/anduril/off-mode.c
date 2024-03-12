@@ -107,9 +107,7 @@ uint8_t off_state(Event event, uint16_t arg) {
     else if (event == EV_click1_hold) {
         #if (B_TIMING_ON == B_PRESS_T)
         #ifdef MOON_TIMING_HINT
-        if (arg == 0) {
-            // let the user know they can let go now to stay at moon
-            blip();
+        if (arg == 0) { //removed blip
         } else
         #endif
         #else  // B_RELEASE_T or B_TIMEOUT_T
