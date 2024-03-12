@@ -19,12 +19,11 @@ uint8_t lockout_state(Event event, uint16_t arg) {
         // click, hold: highest floor (or manual mem level)
         uint8_t lvl = cfg.ramp_floors[0];
         if (1 == (event & 0x0f)) {  // first click
-            if (cfg.ramp_floors[1] < lvl) lvl = cfg.ramp_floors[1];
-        } else {  // 2nd click or later
             if (cfg.ramp_floors[1] > lvl) lvl = cfg.ramp_floors[1];
             #ifdef USE_MANUAL_MEMORY
             if (cfg.manual_memory) lvl = cfg.manual_memory;
             #endif
+        } else {
         }
         set_level(lvl);
     }
@@ -84,15 +83,14 @@ uint8_t lockout_state(Event event, uint16_t arg) {
     }
     #endif
 
-    // 3 clicks: exit and turn off
-    else if (event == EV_3clicks) {
-        blink_once();
+    // 2 clicks: exit and turn off
+    else if (event == EV_2clicks) {
         set_state(off_state, 0);
         return EVENT_HANDLED;
     }
 
-    // 4 clicks: exit and turn on
-    else if (event == EV_4clicks) {
+    // 3 clicks: exit and turn on
+    else if (event == EV_3clicks) {
         #if defined(USE_MANUAL_MEMORY) && !defined(USE_MANUAL_MEMORY_TIMER)
         // this clause probably isn't used by any configs any more
         // but is included just in case someone configures it this way
