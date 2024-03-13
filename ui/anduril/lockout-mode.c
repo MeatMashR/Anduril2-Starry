@@ -19,11 +19,11 @@ uint8_t lockout_state(Event event, uint16_t arg) {
         // click, hold: highest floor (or manual mem level)
         uint8_t lvl = cfg.ramp_floors[0];
         if (1 == (event & 0x0f)) {  // first click
-        } else { // 2nd click or later
-            if (cfg.ramp_floors[1] > lvl) lvl = cfg.ramp_floors[1];
+                    if (cfg.ramp_floors[1] > lvl) lvl = cfg.ramp_floors[1];
             #ifdef USE_MANUAL_MEMORY
             if (cfg.manual_memory) lvl = cfg.manual_memory;
-            #endif
+            #endif} else { // 2nd click or later
+
         }
         set_level(lvl);
     }
