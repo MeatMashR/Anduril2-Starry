@@ -14,16 +14,16 @@ uint8_t lockout_state(Event event, uint16_t arg) {
     // don't turn on during RGB aux LED configuration
     if (event == EV_click7_hold) { set_level(0); } else
     #endif
-    if ((event & (B_CLICK | B_PRESS)) == (B_CLICK | B_PRESS)) {
+if ((event & (B_CLICK | B_PRESS)) == (B_CLICK | B_PRESS)) {
         // hold: lowest floor
         // click, hold: highest floor (or manual mem level)
-        uint8_t lvl = cfg.ramp_floors[0];
+        uint8_t lvl = cfg.ramp_floors[1];
         if (1 == (event & 0x0f)) {  // first click
-            if (cfg.ramp_floors[1] > lvl) lvl = cfg.ramp_floors[1];
+            if (cfg.ramp_floors[1] < lvl) lvl = cfg.ramp_floors[1];
             #ifdef USE_MANUAL_MEMORY
-            if (cfg.manual_memory) lvl = cfg.manual_memory;
+            if (cfg.manual_memory) lvl = cfg.manual_memory;            
+        } else {  // 2nd click or later
             #endif
-        } else {
         }
         set_level(lvl);
     }
@@ -31,7 +31,7 @@ uint8_t lockout_state(Event event, uint16_t arg) {
     else if ((event & (B_CLICK | B_PRESS)) == (B_CLICK)) {
         set_level(0);
     }
-    #endif  // ifdef USE_MOON_DURING_LOCKOUT_MODE
+    #endif    // ifdef USE_MOON_DURING_LOCKOUT_MODE
 
     // regular event handling
     // conserve power while locked out
