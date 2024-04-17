@@ -199,44 +199,10 @@ uint8_t off_state(Event event, uint16_t arg) {
         return EVENT_HANDLED;
     }
 
-    // 3 clicks (initial press): off, to prep for later events
-    else if (event == EV_click3_press) {
-        #ifdef USE_SMOOTH_STEPS
-            // immediately cancel any animations in progress
-            smooth_steps_in_progress = 0;
-        #endif
-        off_state_set_level(0);
-        return EVENT_HANDLED;
-    }
-
-    #ifdef USE_BATTCHECK
-    // 3 clicks: battcheck mode / blinky mode group 1
-    else if (event == EV_3clicks) {
-        set_state(battcheck_state, 0);
-        return EVENT_HANDLED;
-    }
-    #endif
-
     #ifdef USE_LOCKOUT_MODE
     // 4 clicks: soft lockout
     else if (event == EV_4clicks) {
         set_state(lockout_state, 0);
-        return EVENT_HANDLED;
-    }
-    #endif
-
-    #if defined(USE_FACTORY_RESET) && defined(USE_SOFT_FACTORY_RESET)
-    // 13 clicks and hold the last click: invoke factory reset (reboot)
-    else if (event == EV_click13_hold) {
-        reboot();
-        return EVENT_HANDLED;
-    }
-    #endif
-
-    #ifdef USE_VERSION_CHECK
-    // 15+ clicks: show the version number
-    else if (event == EV_15clicks) {
-        set_state(version_check_state, 0);
         return EVENT_HANDLED;
     }
     #endif
@@ -343,6 +309,24 @@ uint8_t off_state(Event event, uint16_t arg) {
     }
     #endif  // ifdef USE_SIMPLE_UI
 
+    // 3 clicks (initial press): off, to prep for later events
+    else if (event == EV_click3_press) {
+        #ifdef USE_SMOOTH_STEPS
+            // immediately cancel any animations in progress
+            smooth_steps_in_progress = 0;
+        #endif
+        off_state_set_level(0);
+        return EVENT_HANDLED;
+    }
+
+    #ifdef USE_BATTCHECK
+    // 3 clicks: battcheck mode / blinky mode group 1
+    else if (event == EV_3clicks) {
+        set_state(battcheck_state, 0);
+        return EVENT_HANDLED;
+    }
+    #endif
+        
     #ifdef USE_MOMENTARY_MODE
     // 5 clicks: momentary mode
     else if (event == EV_5clicks) {
@@ -361,6 +345,23 @@ uint8_t off_state(Event event, uint16_t arg) {
     }
     #endif
 
+
+    #if defined(USE_FACTORY_RESET) && defined(USE_SOFT_FACTORY_RESET)
+    // 13 clicks and hold the last click: invoke factory reset (reboot)
+    else if (event == EV_click13_hold) {
+        reboot();
+        return EVENT_HANDLED;
+    }
+    #endif
+
+    #ifdef USE_VERSION_CHECK
+    // 15+ clicks: show the version number
+    else if (event == EV_15clicks) {
+        set_state(version_check_state, 0);
+        return EVENT_HANDLED;
+    }
+    #endif
+        
     #ifdef USE_GLOBALS_CONFIG
     // 9 clicks, but hold last click: configure misc global settings
     else if ((event == EV_click9_hold) && (!arg)) {
